@@ -5,7 +5,7 @@ using UnityEngine;
 public class MoveBackground : MonoBehaviour {
 
 
-
+	public int a = 2;
 	public float speed;
 	private float x;
 	public float PontoDeDestino;
