@@ -1,0 +1,52 @@
+[
+  {
+    "MountId": "56e62dd7-241f-41e9-8c6b-dd4ca4513e62",
+    "AncestorCsetIds": [
+      2
+    ],
+    "SourceCsetId": 3,
+    "DestinationCsetId": 2,
+    "FileConflicts": [
+      {
+        "Path": "/.git/config",
+        "ItemId": 260,
+        "ParentItemId": 249,
+        "BaseRevId": 103,
+        "SourceRevId": 590,
+        "DestinationRevId": 103
+      },
+      {
+        "Path": "/.git/index",
+        "ItemId": 265,
+        "ParentItemId": 249,
+        "BaseRevId": 514,
+        "SourceRevId": 591,
+        "DestinationRevId": 514
+      },
+      {
+        "Path": "/.git/refs/heads/master",
+        "ItemId": 466,
+        "ParentItemId": 396,
+        "BaseRevId": 515,
+        "SourceRevId": 592,
+        "DestinationRevId": 515
+      },
+      {
+        "Path": "/Assets/Scenes/SampleScene.unity",
+        "ItemId": 423,
+        "ParentItemId": 275,
+        "BaseRevId": 549,
+        "SourceRevId": 638,
+        "DestinationRevId": 549
+      },
+      {
+        "Path": "/Assets/Free Pixel Art Hills/contact.txt.meta",
+        "ItemId": 568,
+        "ParentItemId": 557,
+        "BaseRevId": 544,
+        "SourceRevId": 627,
+        "DestinationRevId": 544
+      }
+    ]
+  }
+]
