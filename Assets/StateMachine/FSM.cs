@@ -33,6 +33,7 @@ public class FSM : MonoBehaviour
     public Parameter parameter;
     void Start()
     {
+        parameter.animator = transform.GetComponent<Animator>();
         states.Add(StateType.Idle, new IdleState(this));
         states.Add(StateType.Patrol, new PatrolState(this));
         states.Add(StateType.Chase, new ChaseState(this));
@@ -43,22 +44,22 @@ public class FSM : MonoBehaviour
 
         TransitionState(StateType.Idle);
 
-        parameter.animator = transform.GetComponent<Animator>();
+
     }
 
     void Update()
     {
         currentState.OnUpdate();
 
-        if (Input.GetKeyDown(KeyCode.Return))
+       /* if (Input.GetKeyDown(KeyCode.Return))
         {
             parameter.getHit = true;
-        }
+        }*/
     }
 
     public void TransitionState(StateType type)
     {
-        if (currentState != null)
+        if (currentState! != null)
             currentState.OnExit();
         currentState = states[type];
         currentState.OnEnter();
@@ -70,11 +71,11 @@ public class FSM : MonoBehaviour
         {
             if (transform.position.x > target.position.x)
             {
-                transform.localScale = new Vector3(-1, 1, 1);
+                transform.localScale = new Vector3(-2, 2, 1);
             }
             else if (transform.position.x < target.position.x)
             {
-                transform.localScale = new Vector3(1, 1, 1);
+                transform.localScale = new Vector3(2,2, 1);
             }
         }
     }
@@ -94,7 +95,7 @@ public class FSM : MonoBehaviour
             parameter.target = null;
         }
     }
-
+    
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(parameter.attackPoint.position, parameter.attackArea);

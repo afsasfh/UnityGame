@@ -67,7 +67,7 @@ public class PatrolState : IState
         manager.transform.position = Vector2.MoveTowards(manager.transform.position,
             parameter.patrolPoints[patrolPosition].position, parameter.moveSpeed * Time.deltaTime);
 
-        if (parameter.getHit)
+       if (parameter.getHit)
         {
             manager.TransitionState(StateType.Hit);
         }
