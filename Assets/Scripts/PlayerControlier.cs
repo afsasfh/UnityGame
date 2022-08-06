@@ -151,7 +151,7 @@ public class PlayerControlier : MonoBehaviour {
 			Destroy(collision.gameObject);
 			//Carrot += 1;
 			//CarrotNum.text = Carrot.ToString();
-        }else if(collision.tag == "Enemy")
+        }else if(collision.tag == "EnemyAttack")
         {
 			Debug.Log("I have hitted" + collision.name);
 			currentHp -= 10.0f;
