@@ -8,7 +8,8 @@ public class PlayerControlier : MonoBehaviour {
 	private Rigidbody2D rb;
 	private Animator anim;
 	private Collider2D coll;
-
+	public float maxHp = 100.0f;
+	public float currentHp = 10.0f;
 
 	//没用
 	private bool Ishurt;//默认是false
@@ -16,7 +17,7 @@ public class PlayerControlier : MonoBehaviour {
 	public float jumpforce;
 	public LayerMask ground;
 	public Transform groundCheck;
-	public Text CherryNum;
+	//public Text CarrotNum;
 
 	bool jumpPressed;
 	public bool isGround, isJump;
@@ -25,10 +26,14 @@ public class PlayerControlier : MonoBehaviour {
 
 
 
-	public int Cherry=0;
+    //public int Carrot=0;
 
+    private void Awake()
+    {
+		currentHp = maxHp;
+    }
 
-	private float facedircetion;
+    private float facedircetion;
 
 	void Start () {
 		rb = GetComponent<Rigidbody2D>();
@@ -137,19 +142,24 @@ public class PlayerControlier : MonoBehaviour {
 		
 	}
 
-	/*
+	
 	//收集物品
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag == "Collections")
         {
 			Destroy(collision.gameObject);
-			Cherry += 1;
-			CherryNum.text = Cherry.ToString();
+			//Carrot += 1;
+			//CarrotNum.text = Carrot.ToString();
+        }else if(collision.tag == "Enemy")
+        {
+			Debug.Log("I have hitted" + collision.name);
+			currentHp -= 10.0f;
+			Debug.Log("Current Hp is " + currentHp);
         }
     }
     //消灭敌人
-    private void OnCollisionEnter2D(Collision2D collision)
+    /*private void OnCollisionEnter2D(Collision2D collision)
     {
 		if (collision.gameObject.tag == "Enemy")
 		{
