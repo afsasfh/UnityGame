@@ -48,7 +48,7 @@ public class PlayerControlier : MonoBehaviour {
 
 		isGround = Physics2D.OverlapCircle(groundCheck.position, 0.1f, ground);
 		Jump();
-
+		//Attack();
 
 		if (!Ishurt)
         {
@@ -106,8 +106,10 @@ public class PlayerControlier : MonoBehaviour {
 	{
 		if (Input.GetButtonDown("Jump") && jumpCount > 0)
 		{
+			anim.SetBool("isJump", true);
 			jumpCount-=1;
 			anim.SetFloat("running",0);
+			
 			jumpPressed = true;
 			rb.velocity = new Vector2(rb.velocity.x, jumpforce);
 			GetComponent<Animator>().Play("jump");
@@ -118,27 +120,43 @@ public class PlayerControlier : MonoBehaviour {
 	public void IsJumping()
 	{
 		isJump = true;
+		anim.SetBool("isJump", true);
 	}
 	public void Jumping()
     {
 		isJump = false;
+		anim.SetBool("isJump", false);
 		jumpPressed = false;
 	}
 	public void JumpEnd()
     {	
 		anim.Play("idle");
+		anim.SetBool("isIdle",true);
 	}
 	//切换动画效果	
+
+	/*void Attack()
+    {
+        if (Input.GetButton("Attack"))
+        {
+			anim.SetTrigger("Attack");
+        }
+    }*/
 	void SwitchAnim()
     {
      
         if (!isGround && !jumpPressed)
         {
+			
+			anim.SetBool("isFall", true);
 			anim.Play("fall");
 			isJump = true;
+			anim.SetBool("isJump", true);
 		}	
 		if(isGround && isJump)
         {
+			anim.SetBool("isDrop", true);
+			anim.SetBool("isJump", false);
 			isJump = false;
 			jumpCount = jumpCountmax;
 			anim.Play("Drop");

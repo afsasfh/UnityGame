@@ -29,17 +29,20 @@ public class Parameter
     public float attackArea;
     public Animator animator;
     public bool getHit;
-
-    
+   
 }
 public class FSM : MonoBehaviour
 {
+    private SpriteRenderer sr;
+    private Color originalColor;//记录怪物初始颜色
 
     private IState currentState;
     private Dictionary<StateType, IState> states = new Dictionary<StateType, IState>();
     public Parameter parameter;
     void Start()
     {
+        sr = GetComponent<SpriteRenderer>();
+        originalColor = sr.color;
         parameter.patrolPoints.Add(new Vector3(transform.position.x - parameter.patroldistance, transform.position.y, transform.position.z));
         parameter.patrolPoints.Add(new Vector3(transform.position.x + parameter.patroldistance, transform.position.y, transform.position.z));
         parameter.chasePoints.Add( new Vector3(transform.position.x - parameter.chasedistance, transform.position.y, transform.position.z));
@@ -68,6 +71,15 @@ public class FSM : MonoBehaviour
         }*/
     }
 
+    void FlashColor(float time)
+    {
+        sr.color = Color.red;
+        Invoke("ResetColor",time);
+    }
+     void ResetColor()
+    {
+        sr.color = originalColor;
+    }
     public void TransitionState(StateType type)
     {
         if (currentState! != null)
