@@ -128,6 +128,7 @@ public class PlayerControlier : MonoBehaviour {
 	//切换动画效果	
 	void SwitchAnim()
     {
+     
         if (!isGround && !jumpPressed)
         {
 			anim.Play("fall");
