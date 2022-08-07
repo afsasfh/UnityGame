@@ -27,8 +27,8 @@ public class IdleState : IState
             manager.TransitionState(StateType.Hit);
         }
         if (parameter.target != null &&
-            parameter.target.position.x >= parameter.chasePoints[0].position.x &&
-            parameter.target.position.x <= parameter.chasePoints[1].position.x)
+            parameter.target.position.x >= parameter.chasePoints[0].x &&
+            parameter.target.position.x <= parameter.chasePoints[1].x)
         {
             manager.TransitionState(StateType.React);
         }
@@ -62,22 +62,22 @@ public class PatrolState : IState
 
     public void OnUpdate()
     {
-        manager.FlipTo(parameter.patrolPoints[patrolPosition]);
+        manager.FlipTo(parameter.patrolPoints[patrolPosition].x);
 
         manager.transform.position = Vector2.MoveTowards(manager.transform.position,
-            parameter.patrolPoints[patrolPosition].position, parameter.moveSpeed * Time.deltaTime);
+            parameter.patrolPoints[patrolPosition], parameter.moveSpeed * Time.deltaTime);
 
        if (parameter.getHit)
         {
             manager.TransitionState(StateType.Hit);
         }
         if (parameter.target != null &&
-            parameter.target.position.x >= parameter.chasePoints[0].position.x &&
-            parameter.target.position.x <= parameter.chasePoints[1].position.x)
+            parameter.target.position.x >= parameter.chasePoints[0].x &&
+            parameter.target.position.x <= parameter.chasePoints[1].x)
         {
             manager.TransitionState(StateType.React);
         }
-        if (Vector2.Distance(manager.transform.position, parameter.patrolPoints[patrolPosition].position) < .1f)
+        if (Vector2.Distance(manager.transform.position, parameter.patrolPoints[patrolPosition]) < .1f)
         {
             manager.TransitionState(StateType.Idle);
         }
@@ -87,7 +87,7 @@ public class PatrolState : IState
     {
         patrolPosition++;
 
-        if (patrolPosition >= parameter.patrolPoints.Length)
+        if (patrolPosition >= parameter.patrolPoints.Count)
         {
             patrolPosition = 0;
         }
@@ -111,18 +111,18 @@ public class ChaseState : IState
 
     public void OnUpdate()
     {
-        manager.FlipTo(parameter.target);
+        manager.FlipTo(parameter.target.position.x);
         if (parameter.target)
             manager.transform.position = Vector2.MoveTowards(manager.transform.position,
-            parameter.target.position, parameter.chaseSpeed * Time.deltaTime);
+           new Vector2(parameter.target.position.x,manager.transform.position.y), parameter.chaseSpeed * Time.deltaTime);
 
         if (parameter.getHit)
         {
             manager.TransitionState(StateType.Hit);
         }
         if (parameter.target == null ||
-            manager.transform.position.x < parameter.chasePoints[0].position.x ||
-            manager.transform.position.x > parameter.chasePoints[1].position.x)
+            manager.transform.position.x < parameter.chasePoints[0].x ||
+            manager.transform.position.x > parameter.chasePoints[1].x)
         {
             manager.TransitionState(StateType.Idle);
         }
@@ -198,7 +198,7 @@ public class AttackState : IState
         {
             manager.TransitionState(StateType.Hit);
         }
-        if (info.normalizedTime >= .95f)
+        if (info.normalizedTime >= .85f)
         {
             manager.TransitionState(StateType.Chase);
         }

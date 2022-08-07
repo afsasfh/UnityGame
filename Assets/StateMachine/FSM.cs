@@ -11,28 +11,39 @@ public enum StateType
 [Serializable]
 public class Parameter
 {
+
+    [Header("怪物参数")]
     public int health;
     public float moveSpeed;
     public float chaseSpeed;
     public float idleTime;
-    public Transform[] patrolPoints;
-    public Transform[] chasePoints;
+    public float patroldistance;
+    public float chasedistance;
+
+    [Header("其他参数")]
+    public List<Vector3> patrolPoints=new List<Vector3>();
+    public List<Vector3> chasePoints = new List<Vector3>();
     public Transform target;
     public LayerMask targetLayer;
     public Transform attackPoint;
     public float attackArea;
     public Animator animator;
     public bool getHit;
+
+    
 }
 public class FSM : MonoBehaviour
 {
 
     private IState currentState;
     private Dictionary<StateType, IState> states = new Dictionary<StateType, IState>();
-
     public Parameter parameter;
     void Start()
     {
+        parameter.patrolPoints.Add(new Vector3(transform.position.x - parameter.patroldistance, transform.position.y, transform.position.z));
+        parameter.patrolPoints.Add(new Vector3(transform.position.x + parameter.patroldistance, transform.position.y, transform.position.z));
+        parameter.chasePoints.Add( new Vector3(transform.position.x - parameter.chasedistance, transform.position.y, transform.position.z));
+        parameter.chasePoints.Add( new Vector3(transform.position.x + parameter.chasedistance, transform.position.y, transform.position.z));
         parameter.animator = transform.GetComponent<Animator>();
         states.Add(StateType.Idle, new IdleState(this));
         states.Add(StateType.Patrol, new PatrolState(this));
@@ -65,22 +76,27 @@ public class FSM : MonoBehaviour
         currentState.OnEnter();
     }
 
-    public void FlipTo(Transform target)
+    public void FlipTo(float x)
     {
-        if (target != null)
-        {
-            if (transform.position.x > target.position.x)
+            if (transform.position.x > x)
             {
-                transform.localScale = new Vector3(-2, 2, 1);
+                transform.localScale = new Vector3(-1*MathF.Abs(transform.localScale.x), transform.localScale.y, 1);
             }
-            else if (transform.position.x < target.position.x)
+            else if (transform.position.x < x)
             {
-                transform.localScale = new Vector3(2,2, 1);
+                transform.localScale = new Vector3(MathF.Abs(transform.localScale.x), transform.localScale.y, 1);
             }
-        }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            parameter.target = other.transform;
+            //parameter.target.position = new Vector3(other.transform.position.x, transform.position.y, 1);
+        }
+    }
+  /*  private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
@@ -94,7 +110,7 @@ public class FSM : MonoBehaviour
         {
             parameter.target = null;
         }
-    }
+    }*/
     
     private void OnDrawGizmos()
     {

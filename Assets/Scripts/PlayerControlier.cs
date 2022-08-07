@@ -108,7 +108,6 @@ public class PlayerControlier : MonoBehaviour {
 		{
 			jumpCount-=1;
 			anim.SetFloat("running",0);
-			//isJump = true;
 			jumpPressed = true;
 			rb.velocity = new Vector2(rb.velocity.x, jumpforce);
 			GetComponent<Animator>().Play("jump");
@@ -116,6 +115,10 @@ public class PlayerControlier : MonoBehaviour {
 		
 	}
 
+	public void IsJumping()
+	{
+		isJump = true;
+	}
 	public void Jumping()
     {
 		isJump = false;
