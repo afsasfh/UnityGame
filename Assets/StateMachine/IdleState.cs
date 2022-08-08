@@ -224,7 +224,7 @@ public class HitState : IState
     public void OnEnter()
     {
         parameter.animator.Play("Hit");
-        parameter.health--;
+        //parameter.health-- ;
     }
 
     public void OnUpdate()
@@ -254,6 +254,7 @@ public class DeathState : IState
     private FSM manager;
     private Parameter parameter;
 
+
     public DeathState(FSM manager)
     {
         this.manager = manager;
@@ -266,7 +267,6 @@ public class DeathState : IState
 
     public void OnUpdate()
     {
-
     }
 
     public void OnExit()

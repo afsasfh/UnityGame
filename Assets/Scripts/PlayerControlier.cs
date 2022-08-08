@@ -175,9 +175,9 @@ public class PlayerControlier : MonoBehaviour {
 			//CarrotNum.text = Carrot.ToString();
         }else if(collision.tag == "EnemyAttack")
         {
-			Debug.Log("I have hitted" + collision.name);
+			//Debug.Log("I have hitted" + collision.name);
 			currentHp -= 10.0f;
-			Debug.Log("Current Hp is " + currentHp);
+			//Debug.Log("Current Hp is " + currentHp);
         }
     }
     //消灭敌人

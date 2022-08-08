@@ -6,7 +6,7 @@ using System;
 
 public class PlayerAttack : MonoBehaviour
 {
-    public int damage;
+    public float damage;
     private Animator anim;
     private PolygonCollider2D coll2D;
     public float time;
@@ -45,13 +45,22 @@ public class PlayerAttack : MonoBehaviour
         yield return new WaitForSeconds(time);
         coll2D.enabled = false;
     }
-    
-     void OnTriggerEnter2D(Collider2D other)
+
+    /*private void OnTriggerEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-          // other.GetComponent<FSM>().TakeDamage(damage);
-           
+            // other.GetComponent<FSM>().TakeDamage(damage);
+            Debug.Log(1);
+
+        }
+    }*/
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            other.GetComponent<FSM>().TakeDamage(damage);
+            //Debug.Log(1);
 
         }
     }

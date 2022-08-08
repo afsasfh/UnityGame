@@ -13,7 +13,7 @@ public class Parameter
 {
 
     [Header("怪物参数")]
-    public int health;
+    public float health;
     public float moveSpeed;
     public float chaseSpeed;
     public float idleTime;
@@ -61,14 +61,16 @@ public class FSM : MonoBehaviour
 
     }
 
+    public bool PlayerAttack =false;
     void Update()
     {
         currentState.OnUpdate();
 
-       /* if (Input.GetKeyDown(KeyCode.Return))
+        if (PlayerAttack)
         {
             parameter.getHit = true;
-        }*/
+            PlayerAttack = false;
+        }
     }
 
     void FlashColor(float time)
@@ -105,7 +107,6 @@ public class FSM : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             parameter.target = other.transform;
-            //parameter.target.position = new Vector3(other.transform.position.x, transform.position.y, 1);
         }
     }
   /*  private void OnTriggerEnter2D(Collider2D other)
@@ -124,8 +125,20 @@ public class FSM : MonoBehaviour
         }
     }*/
     
+
+    public void TakeDamage(float damage)
+    {
+        parameter.health -= damage;
+        PlayerAttack = true;
+    }
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(parameter.attackPoint.position, parameter.attackArea);
+    }
+
+
+    public void EnemyDeath()
+    {
+        Destroy(gameObject);
     }
 }
